@@ -3,10 +3,11 @@
 Natural Language Processing (NLP) for Persian language as a service.
 
 ## Features:
+
 * Written in Haskell
 * RESTful API (Integration is seamless)
 
-## Installaion
+## Installaion 
 
 There are some methods for installing Ereina on your system.
 
@@ -15,6 +16,12 @@ There are some methods for installing Ereina on your system.
 ```sh
 $ stack build
 $ stack exec Ereina
+```
+
+**Note**: For testing before installation run:
+
+```sh
+$ stack test
 ```
 
 * Second method, as a docker container (a RESTful server behind nginx):

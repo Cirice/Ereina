@@ -17,6 +17,10 @@ $ stack build
 $ stack exec Ereina
 ```
 
+* Second method, as a docker container (a RESTful server behind nginx):
+
+To be written ...
+
 # Usage and Methods
 
 * version: this method returns a message regarding Ereina's version

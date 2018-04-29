@@ -1,13 +1,13 @@
 name:                Ereina
 version:             0.1.0.0
--- synopsis:
--- description:
-homepage:            https://github.com/githubuser/Ereina#readme
+synopsis: A service for Natural Language Processing Applications in Persian
+description:
+homepage:            https://github.com/Cirice/Ereina#readme
 license:             BSD3
 license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2018 Author name here
+author:              Hossein Abedi
+maintainer:          abedi.hossein@protonmail.ch
+copyright:           2018 Hossein Abedi
 category:            Web
 build-type:          Simple
 extra-source-files:  README.md
@@ -48,10 +48,12 @@ test-suite Ereina-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
+                     , tasty
+                     , tasty-hunit
                      , Ereina
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/Ereina
+  location: https://github.com/Cirice/Ereina

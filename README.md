@@ -39,7 +39,9 @@ curl -d '{"document":" باید چاره ای برای   این کار اندی�
 $ {"document":"باید چاره ای برای این کار اندیشید"}% 
 ```
 
-## API documentation
+## Todos
 
-To be written .... 
+* Adding tests
+* Adding more methods
+* Writing more doumentation
 

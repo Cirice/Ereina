@@ -21,7 +21,7 @@ $ stack exec Ereina
 
 To be written ...
 
-# Usage and Methods
+## Usage and Methods
 
 * version: this method returns a message regarding Ereina's version
 

@@ -17,6 +17,24 @@ $ stack build
 $ stack exec Ereina
 ```
 
+# Usage and Methods
+
+* version: this method returns a message regarding Ereina's version
+
+```sh
+curl -GET  http://localhost:2319/version 
+
+$ {"version":"0.1.0.0","message":"Hi there, I am Ereina."}% 
+```
+
+* fixSpaces: given a document removes the redundant spaces from the document
+
+```sh
+curl -d '{"document":" باید چاره ای برای   این کار اندیشید    " }' -H "Content-Type: application/json" -X POST http://localhost:2319/fixSpaces
+
+$ {"document":"باید چاره ای برای این کار اندیشید"}% 
+```
+
 ## API documentation
 
 To be written .... 

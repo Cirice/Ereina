@@ -3,6 +3,8 @@
 {-# LANGUAGE TypeOperators   #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 {-|
 Module      : Lib
@@ -24,24 +26,34 @@ import Network.Wai
 import Network.Wai.Handler.Warp
 import GHC.Generics
 import Servant
-import qualified Data.Map.Strict as SM
 import Data.List
+import Control.Monad.IO.Class
 import Prelude
 import Data.Char
+import qualified Data.Map.Strict as SM
 import Types
 import Data.List.Utils 
 import Toolkit
+import qualified Internal.Rules as Rules
 
-$(deriveJSON defaultOptions ''FixSpacesRequest)
+
+$(deriveJSON defaultOptions ''RequestDocument)
 $(deriveJSON defaultOptions ''Version)
-instance ToJSON FixSpacesResponse
+
+instance ToJSON ResponseDocument
+instance ToJSON ResponseLocations
+instance ToJSON ResponseDiseases
 
 type API = "version" :> Get '[JSON] Version  
-      :<|> "fixSpaces" :> ReqBody '[JSON] FixSpacesRequest :> Post '[JSON] FixSpacesResponse
+      :<|> "fixSpaces" :> ReqBody '[JSON] RequestDocument :> Post '[JSON] ResponseDocument
+      :<|> "dropStopwords" :> ReqBody '[JSON] RequestDocument :> Post '[JSON] ResponseDocument
+      :<|> "dropPunctuations" :> ReqBody '[JSON] RequestDocument :> Post '[JSON] ResponseDocument
+      :<|> "extractLocations" :> ReqBody '[JSON] RequestDocument :> Post '[JSON] ResponseLocations
+      :<|> "extractDiseases" :> ReqBody '[JSON] RequestDocument :> Post '[JSON] ResponseDiseases
 
 -- | Returns API version as a JSON object
 version' :: Version
-version' = Version "0.1.0.0" "Hi there, I am Ereina."
+version' = Version "0.1.1.0" "Hi there, I am Ereina."
 
 startApp :: IO ()
 startApp = run 2319 app
@@ -55,7 +67,22 @@ app = serve api server
 server :: Server API
 server = return version'
     :<|> fixSpaces  
-  where fixSpaces :: FixSpacesRequest -> Handler FixSpacesResponse
-        fixSpaces (FixSpacesRequest document) = return (FixSpacesResponse {document = (removeSpaces document)})
+    :<|> dropStopwords
+    :<|> dropPunctuations
+    :<|> getLocations
+    :<|> getDiseases
+  where 
+        fixSpaces :: RequestDocument -> Handler ResponseDocument
+        fixSpaces (RequestDocument document) = return (ResponseDocument {document = (removeSpaces document)})
+        
+        dropStopwords :: RequestDocument -> Handler ResponseDocument
+        dropStopwords (RequestDocument document) = return (ResponseDocument {document = (removeStopwords document Rules.stopwordsMap)})
 
+        dropPunctuations :: RequestDocument -> Handler ResponseDocument
+        dropPunctuations (RequestDocument document) = return (ResponseDocument {document = (removePunctuations document Rules.punctuationsMap)})     
 
+        getLocations :: RequestDocument -> Handler ResponseLocations
+        getLocations (RequestDocument document) = return (ResponseLocations {locations = (extractLocations document Rules.locations)})  
+
+        getDiseases :: RequestDocument -> Handler ResponseDiseases
+        getDiseases (RequestDocument document) = return (ResponseDiseases {locations = (extractDiseases document Rules.diseases)})      

@@ -1,6 +1,6 @@
 # Ereina
 
-Natural Language Processing (NLP) for Persian language as a service.
+A service/system for expressing composable language rules on input documents (Persian texts), inspired by [Duckling](https://github.com/facebook/duckling). 
 
 ## Features:
 
@@ -18,7 +18,7 @@ $ stack build
 $ stack exec Ereina
 ```
 
-**Note**: For testing before installation run:
+**Note**: For running tests before installation, run:
 
 ```sh
 $ stack test
@@ -48,7 +48,7 @@ $ {"document":"باید چاره ای برای این کار اندیشید"}%
 
 ## Todos
 
-* Adding tests
+* Adding more tests
 * Adding more methods
 * Writing more doumentation
 

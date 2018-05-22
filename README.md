@@ -47,7 +47,7 @@ curl -d '{"document":" باید چاره ای برای   این کار اندی�
 $ {"document":"باید چاره ای برای این کار اندیشید"}% 
 ```
 
-* dropStopwords: given a document, removes stopwords (some frequent words and usually with conjunctive roles) from the document
+* dropStopwords: given a document, removes stopwords (some frequent words, usually in conjunctive roles) from the document
 
 ```sh
 curl -d '{"document":" وگو با خبرنگار خبرگزاری فارس در پردیس در خصوص اوضاع ترافیکی محورهای مواصلاتی هراز، فیروزکوه و امام رضا (ع) اظهار کرد: محور هراز در مسیر جنوب به شمال در برخی نقاط دارای ترافیک سنگین بوده و بقیه مسیر دارای ترافیک پرحجم است.

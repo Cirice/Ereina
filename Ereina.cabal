@@ -1,6 +1,6 @@
 name:                Ereina
-version:             0.1.0.0
-synopsis: A service for Natural Language Processing Applications in Persian
+version:             0.1.1.1
+synopsis: A service/system for expressing composable language rules on input documents in Persian language
 description:
 homepage:            https://github.com/Cirice/Ereina#readme
 license:             BSD3
@@ -8,8 +8,9 @@ license-file:        LICENSE
 author:              Hossein Abedi
 maintainer:          abedi.hossein@protonmail.ch
 copyright:           2018 Hossein Abedi
-category:            Web
+category:            Systems
 build-type:          Simple
+stability:           alpha
 extra-source-files:  README.md
 cabal-version:       >=1.10
 
@@ -18,6 +19,7 @@ library
   exposed-modules:     Lib
                      , Types 
                      , Toolkit
+                     , Internal.Rules
   build-depends:       base >= 4.7 && < 5
                      , aeson
                      , servant-server
@@ -32,7 +34,10 @@ library
                      , parallel 
                      , yaml
                      , bytestring
-                     , MissingH 
+                     , MissingH
+                     , transformers 
+                     , regex-base
+                     , regex-pcre
   default-language:    Haskell2010
 
 executable Ereina

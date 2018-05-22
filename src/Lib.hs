@@ -43,6 +43,7 @@ $(deriveJSON defaultOptions ''Version)
 instance ToJSON ResponseDocument
 instance ToJSON ResponseLocations
 instance ToJSON ResponseDiseases
+instance ToJSON ResponseBrands
 
 type API = "version" :> Get '[JSON] Version  
       :<|> "fixSpaces" :> ReqBody '[JSON] RequestDocument :> Post '[JSON] ResponseDocument
@@ -50,10 +51,11 @@ type API = "version" :> Get '[JSON] Version
       :<|> "dropPunctuations" :> ReqBody '[JSON] RequestDocument :> Post '[JSON] ResponseDocument
       :<|> "extractLocations" :> ReqBody '[JSON] RequestDocument :> Post '[JSON] ResponseLocations
       :<|> "extractDiseases" :> ReqBody '[JSON] RequestDocument :> Post '[JSON] ResponseDiseases
+      :<|> "extractBrands" :> ReqBody '[JSON] RequestDocument :> Post '[JSON] ResponseBrands
 
 -- | Returns API version as a JSON object
 version' :: Version
-version' = Version "0.1.1.0" "Hi there, I am Ereina."
+version' = Version "0.1.1.1" "Hi there, I am Ereina."
 
 startApp :: IO ()
 startApp = run 2319 app
@@ -71,18 +73,22 @@ server = return version'
     :<|> dropPunctuations
     :<|> getLocations
     :<|> getDiseases
+    :<|> getBrands
   where 
         fixSpaces :: RequestDocument -> Handler ResponseDocument
-        fixSpaces (RequestDocument document) = return (ResponseDocument {document = (removeSpaces document)})
+        fixSpaces (RequestDocument document) = return (ResponseDocument { document = (removeSpaces document)})
         
         dropStopwords :: RequestDocument -> Handler ResponseDocument
-        dropStopwords (RequestDocument document) = return (ResponseDocument {document = (removeStopwords document Rules.stopwordsMap)})
+        dropStopwords (RequestDocument document) = return (ResponseDocument { document = (removeStopwords document Rules.stopwordsMap)})
 
         dropPunctuations :: RequestDocument -> Handler ResponseDocument
-        dropPunctuations (RequestDocument document) = return (ResponseDocument {document = (removePunctuations document Rules.punctuationsMap)})     
+        dropPunctuations (RequestDocument document) = return (ResponseDocument { document = (removePunctuations document Rules.punctuationsMap)})     
 
         getLocations :: RequestDocument -> Handler ResponseLocations
-        getLocations (RequestDocument document) = return (ResponseLocations {locations = (extractLocations document Rules.locations)})  
+        getLocations (RequestDocument document) = return (ResponseLocations { locations = (multipleRegexRules document Rules.locations)})  
 
         getDiseases :: RequestDocument -> Handler ResponseDiseases
-        getDiseases (RequestDocument document) = return (ResponseDiseases {locations = (extractDiseases document Rules.diseases)})      
+        getDiseases (RequestDocument document) = return (ResponseDiseases { diseases = (multipleRegexRules document Rules.diseases)})      
+        
+        getBrands :: RequestDocument -> Handler ResponseBrands
+        getBrands (RequestDocument document) = return (ResponseBrands { brands = (multipleRegexRules document Rules.brands)})      

@@ -10,6 +10,7 @@ module Types
     , ResponseDocument (..)
     , ResponseLocations (..)
     , ResponseDiseases (..)
+    , ResponseBrands (..)
     ) where
 
 import GHC.Generics
@@ -27,4 +28,5 @@ data RequestDocument = RequestDocument { document :: String } deriving (Show, Ge
 data ResponseDocument = ResponseDocument { document :: String } deriving (Show, Generic)
 
 data ResponseLocations = ResponseLocations { locations :: [String] } deriving (Show, Generic)
-data ResponseDiseases = ResponseDiseases { locations :: [String] } deriving (Show, Generic)
+data ResponseDiseases = ResponseDiseases { diseases :: [String] } deriving (Show, Generic)
+data ResponseBrands = ResponseBrands { brands :: [String] } deriving (Show, Generic)

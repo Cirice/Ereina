@@ -25,7 +25,7 @@ $ stack exec Ereina
 $ stack test
 ```
 
-* Second method, as a docker container (a RESTful server behind nginx):
+* Second method, as a docker container (a RESTful server behind Nginx):
 
 To be written ...
 
